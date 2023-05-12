@@ -1,0 +1,262 @@
+/* Estilos para el contenedor principal */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #990000;
+}
+
+/* Estilos para la columna izquierda */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    height: 100vh;
+    background-color: #990000;
+}
+
+/* Estilos para los botones de la columna izquierda */
+.left-column button {
+    margin: 10px;
+    padding: 10px;
+    width: 150px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.left-column button:hover {
+    background-color: gray;
+}
+
+/* Estilos para los botones de la columna derecha */
+.right-column button {
+    background-color: #990000;
+    background-image: linear-gradient(to bottom, #990000, #990000);
+    color: white;
+    text-shadow: none;
+    border: none;
+    cursor: pointer;
+}
+
+.right-column button:hover {
+    background-color: gray;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: rgb(173, 10, 10);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background: url('Images/m_glass.png');
+    background-repeat: no-repeat;
+}
+
+/* Estilos para el botón inferior de la columna izquierda */
+.bottom-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 150px;
+    background-color: #990000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilos para el botón inferior de la columna izquierda */
+.bottom-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 150px;
+    background-color: #990000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+/* Estilos para la columna derecha */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    height: 100vh;
+    background-color: white;
+}
+
+/* Estilos para los espacios de texto en la columna derecha */
+.right-column input[type="text"] {
+    margin: 10px;
+    padding: 10px; 
+    width: calc(100% - 20px);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+/* Estilos para el espacio de información en la columna derecha */
+.right-column textarea {
+    margin: 10px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 120px);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+}
+
+.circular-image {
+    border-radius: 50%;
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.m-glass-image {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a:link { color: black; }
+a:visited { color: black; }
+a:hover { color: yellow; }
+a:focus { color: red; }
+a:active { color: red; }
+
+.post {
+    border-style: solid;
+    border-color: black;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: 30%;
+    margin-bottom: 0%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 4%;
+}
+
+.publications {
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: 50%;
+    margin-top: 6%;
+}
+
+.button-in-publish {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.title-idea {
+    width: 96%; 
+    height: 20%;
+}
+    
+.idea-display {
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui-state-default .ui-icon {
+    background-image: url(/javax.faces.resource/images/ui-icons_38667f_256x240.png.xhtml?ln=primefaces-aristo);
+    background-color: white;
+}
+
+
+#idea-display-grid {
+    table-layout: fixed;
+    height: 100%;
+}
+
+#user-display.grid {
+    table-layout: fixed;
+}
+
+#idea-options {
+    margin-top: 50px;
+}
+
+
+/* Estilos para los botones de la columna derecha */
+#like-button {
+    background-color: #990000;
+    background-image: linear-gradient(to bottom, gray, gray);
+    color: white;
+    text-shadow: none;
+    border: none;
+    cursor: pointer;
+}
+
+body {
+    background-color: #990000;
+    font-family: Ubuntu,sans-serif;
+};
+
+.col-1 {
+    width: 10%;
+}
+
+.col-2 {
+    width: 80%;
+    height: 100%;
+}
+
+.col-3 {
+    width: 10%;
+    align-content: center;
+}
+
+.idea-on-display {
+    margin-top: 5%;
+    display: block;
+    width: 100%;
+    height: 75%; 
+    box-sizing: border-box;
+    overflow: auto; /* agregar scroll si hay demasiado contenido */
+}
+
+.order-page {
+    display: block;
+    width: 100%;
+    height: 15%; /* ajustar la altura según el contenido del panel */
+    box-sizing: border-box;
+}
+
+#back-button {
+    width: 60%;
+    margin: auto;
+    display: block;
+}
+
+#next-button {
+    width: 60%;
+    margin: auto;
+    display: block;
+}
+

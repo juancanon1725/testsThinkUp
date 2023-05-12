@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <title>ThinkUp</title>
+    <link rel="stylesheet" type="text/css" href="Content/main.css" />
+    <script src="Javascript/showInputText.js"></script>
+  </h:head>
+  <h:body>
+    <div class="container">
+      <div class="left-column">
+        <div>
+          <img class= "circular-image" src="Content/Images/logo.png" alt="Logo" width="200" height="200"/>
+        </div>
+        <p:commandButton icon="ui-icon-search" action="#{thinkUp.setOnProfile('false')}"/>
+        <p:commandButton value="Perfil" action="#{thinkUp.redirection()}" update="currentIdeaLike"/>
+        <p:commandButton value="Estadísticas" action="#{thinkUp.setOnProfile('false')}"/>
+        <p:commandButton value="Configuración" action="#{thinkUp.setOnProfile('false')}"/>
+        <p:button id="elemento-autenticado" value="Administrar Usuarios" outcome="table.xhtml" rendered="#{thinkUp.isAdminCurrentUser()}" />
+        <p:commandButton value="Cerrar sesión" action="#{thinkUp.logOut()}"/>
+      </div>
+      <div class="right-column">
+        <h:form class="post" id="form">
+                <p:growl for="anotherkey"/>
+                <p:outputLabel value="Título"/>
+                <p:inputText id="title-idea" style="width: 96%; height: 20%;" binding="#{title}"/>
+                <p:outputLabel value="Descripción"/>
+                <p:inputText id="publish"  style="width: 96%;" binding="#{idea}"/>
+                <div class="button-in-publish">
+                    <p:commandButton value="Agregar Idea" action="#{thinkUp.publishAnIdea(title.value, idea.value)}" oncomplete="mostrarPopUpIdea(); cambiarColorLikeInverse();" update="no-idea-created idea-content page currentIdeaLike like-button form:j_idt20:keyword-place"/>
+                    <p:commandButton value="Agregar KeyWord" type="button" onclick="mostrarPopUp();"/>
+                </div>
+                <p:dialog header="Key words" widgetVar="popUp" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:form>
+                      <h:panelGrid columns="1">
+                        <p:messages for="addKeyWord" id="no-keyword-created"/>
+                        <p:outputLabel for="valorPopUp" value="Inserte la key word: " />
+                        <p:inputText id="valorPopUp" binding="#{keyWord}"/>
+                        <p:outputLabel id="keyword-place" value="#{thinkUp.getStringKeyWordsNice()}" />
+                        <p:commandButton value="Agregar" action="#{thinkUp.addStringKeyWord(keyWord.value)}" oncomplete="ocultaPopUp();" update="no-keyword-created keyword-place"/>
+                      </h:panelGrid>  
+                    </h:form>
+                </p:dialog>
+        </h:form>
+        <h:form>
+              <p:dialog id="popUpIdea" header="Creada" widgetVar="popUpIdea" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:form>
+                        <p:outputLabel value="La idea fue creada con éxito" />
+                    </h:form>
+              </p:dialog>
+            </h:form>
+        <p:messages for="somekey" id="no-idea-created"/>
+        <div class="publications">
+            <h:form>
+              <p:dialog id="popUpOrdenar" header="Ordenar" widgetVar="popUpOrdenar" modal="true" showEffect="fade" hideEffect="fade">
+                <p:outputPanel id="manage-ordenar">
+                      <p:message for="columnRadio"/>
+                        <p:outputLabel value="Seleccione el tipo de orden" />
+                        <p:selectOneRadio id="columnRadio" binding="#{columnOption}" layout="responsive" required="true" columns="2" requiredMessage="Por favor, seleccione una opción">
+                          <f:selectItem itemLabel="Título" itemValue="title"/>
+                          <f:selectItem itemLabel="Descripción" itemValue="description" />
+                          <f:selectItem itemLabel="Fecha" itemValue="creationDate" />
+                          <f:selectItem itemLabel="Estado" itemValue="status" />
+                        </p:selectOneRadio>
+                        <p:message for="orderRadio"/>
+                        <p:outputLabel value="Seleccione el tipo de orden" />
+                        <p:selectOneRadio id="orderRadio" binding="#{orderOption}" layout="responsive" columns="1" required="true" requiredMessage="Por favor, seleccione una opción">
+                          <f:selectItem itemLabel="Ascendente" itemValue="asc" />
+                          <f:selectItem itemLabel="Descendente" itemValue="desc" />
+                        </p:selectOneRadio>
+                        <p:commandButton value="Ordenar" action="#{thinkUp.orderIdeasBy(columnOption.value, orderOption.value)}" update="manage-ordenar idea-content :form"/>
+                        <p:commandButton value="Restablecer" action="#{thinkUp.resetOrder()}" onclick="ocultaPopUpOrden();" update="idea-content"/>
+                </p:outputPanel>
+              </p:dialog>
+            </h:form>
+            <h:form>
+              <p:dialog id="popUpEditarStatus" header="Editar" widgetVar="popUpEditarStatus" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:form>
+                        <p:outputLabel value="Seleccione el nuevo estado" />
+                        <p:selectOneRadio id="statusRadio" binding="#{statusOption}" layout="responsive" columns="1">
+                          <f:selectItem itemLabel="Creada" itemValue="Creada" />
+                          <f:selectItem itemLabel="En análisis" itemValue="En análisis" />
+                          <f:selectItem itemLabel="Aprobada" itemValue="Aprobada" />
+                          <f:selectItem itemLabel="Rechazada" itemValue="Rechazada" />
+                          <f:selectItem itemLabel="Finalizada" itemValue="Finalizada" />
+                        </p:selectOneRadio>
+                        <p:commandButton value="Guardar" action="#{thinkUp.editIdeaStatus(statusOption.value)}" onclick="ocultaPopUpStatus();"  update="idea-content"/>
+                        </h:form>
+              </p:dialog>
+            </h:form>
+            <div class="idea-display">
+                <h:inputHidden id="currentIdeaLike" value="#{thinkUp.getCurrentIdeaLike()}" />
+                <h:panelGrid id="idea-display-grid" columns="3" columnClasses="col-1,col-2,col-3">
+                  <p:column>
+                    <p:commandButton id="back-button" icon="ui-icon-triangle-1-w" action="#{thinkUp.changeIdea('back')}" update="like-button back-button next-button idea-content page currentIdeaLike" oncomplete="cambiarColorLikeInverse();" styleClass="ui-button"/>
+                  </p:column>           
+                  
+                  <p:column>
+                    <div class="idea-on-display"> 
+                      <h:panelGrid id="idea-content" columns="1" layout="grid" width="100%" >
+                        <p:outputLabel value="#{thinkUp.getCurrentIdea().getTitle()}" />
+                        <p:outputLabel value="#{thinkUp.getCurrentIdea().getCreationDate()}" />
+                        <p:outputLabel value="#{thinkUp.getCurrentIdea().getStatus()}" />
+                        <p:outputLabel value="#{thinkUp.getCurrentIdea().getDescription()}" />
+                        <p:outputLabel value="#{thinkUp.getCurrentIdea().getStringKeyWords()}" />
+                        <p:commandButton id="like-button" icon="ui-icon-heart" action="#{thinkUp.giveLike()}" update="idea-content like-button" oncomplete="cambiarColorLike('#{thinkUp.getCurrentIdeaLike()}');"/>
+                        <p:outputLabel value="#{thinkUp.getAmountOfLikes()}" />
+                      </h:panelGrid>
+                    </div>
+                    <div class="order-page">
+                      <h:panelGrid columns="2" layout="grid" width="100%">
+                        <p:commandButton value="Ordenar" type="button" onclick="mostrarPopUpOrden();" styleClass="ui-button" style="width: 100%;" />
+                        <p:commandButton icon="ui-icon-pencil" type="button" onclick="mostrarPopUpStatus();" style="width: 100%;" rendered="#{thinkUp.isAdminCurrentUser()}"/>
+                      </h:panelGrid>
+                      <p:outputLabel id="page" value="#{thinkUp.getCurrentIdeaPageToShow()} / #{thinkUp.getAmountOfIdeas()}"/>
+                    </div>
+                  </p:column>
+
+                  <p:column>
+                    <p:commandButton id="next-button" icon="ui-icon-triangle-1-e" action="#{thinkUp.changeIdea('next')}" update="like-button back-button next-button idea-content currentIdeaLike page" oncomplete="cambiarColorLikeInverse();" styleClass="ui-button"/>           
+
+                  </p:column>
+
+                </h:panelGrid>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- Agregamos el archivo JS para el comportamiento del pop-up -->
+	<script type="text/javascript" src="Javascript/showInputText.js"></script>
+    <!-- Solo para poder subir los cambios-->
+  </h:body>
+</html>
