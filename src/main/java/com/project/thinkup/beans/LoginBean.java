@@ -4,6 +4,7 @@ package com.project.thinkup.beans;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 
+
 import com.project.thinkup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

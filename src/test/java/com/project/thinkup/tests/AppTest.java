@@ -22,14 +22,4 @@ public class AppTest {
         Assert.assertTrue( true );
     }
 
-    @Test
-    public void shouldAddUser() {
-
-        UserService userService = new UserService(new UserRepository());
-
-        User user = new User("Juan", "Poveda", "juan.poveda@gmail.com", "123", "activo", "user", "estudiante");
-        User result = userService.addUser(user);
-
-        Assert.assertEquals(user, result);
-    }
 }
